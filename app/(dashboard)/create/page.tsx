@@ -7,14 +7,13 @@ import { Button } from "@/components/ui/button";
 import OwnCards from "@/components/creation/OwnCards";
 import AICards from "@/components/creation/AICards";
 import { Pencil, Stars } from "lucide-react";
-import Kbd from "@/components/kbd/Kbd";
 
 const CreatePage = () => {
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
 
   return (
-    <div className="p-4 bg-slate-100 h-screen overflow-y-auto">
-      <div className="h-full w-full overflow-y-auto flex justify-center items-start">
+    <div className="p-4 bg-slate-100 h-full">
+      <div className="h-full w-full  flex justify-center items-start">
         {selectedMethod ? (
           selectedMethod === "own" ? (
             <OwnCards />

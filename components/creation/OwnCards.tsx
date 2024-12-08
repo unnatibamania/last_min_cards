@@ -50,7 +50,11 @@ export default function EnhancedCardCreator() {
           {cards.map((card, index) => (
             <div
               key={index}
-              className="bg-white flex items-center gap-2 rounded-xl p-2 shadow-sm"
+              className={
+                index === currentIndex
+                  ? "bg-white border border-gray-500 flex items-center gap-2 rounded-xl p-2 shadow-sm"
+                  : "bg-white flex items-center gap-2 rounded-xl p-2 shadow-sm"
+              }
             >
               <GripVertical className="h-4 w-4 cursor-grab" />
               <p className="text-sm font-medium">{card.question}</p>

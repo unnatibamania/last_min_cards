@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar/Navbar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex overflow-hidden">
+    <div className="flex h-screen overflow-hidden">
       <Aside />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />
