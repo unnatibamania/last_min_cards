@@ -5,7 +5,7 @@ import CardView from "./CardView";
 
 const AICards = () => {
   return (
-    <div className="flex flex-col h-full border w-full p-3 overflow-hidden gap-4">
+    <div className="flex flex-col h-full s w-full p-3 overflow-hidden gap-4">
       <div className="flex flex-col justify-between w-full items-center border border-gray-400 p-4 border-dashed h-full rounded-2xl gap-4">
         <div className="flex min-w-96 flex-col gap-4">
           <CardView
