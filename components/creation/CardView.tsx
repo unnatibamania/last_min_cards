@@ -220,14 +220,15 @@ export default function CardView({
                       <Badge
                         key={tag}
                         variant="secondary"
-                        className="text-sm rounded-full text-blue-600 bg-blue-300/40"
+                        className="text-sm rounded-full text-blue-600 bg-blue-300/40 hover:bg-blue-300/60"
                       >
                         {tag}
                         <Button
                           type="button"
-                          variant="ghost"
+                          variant={"ghost"}
+                          // variant="ghost"
                           size="icon"
-                          className="h-4 w-4 ml-1"
+                          className="h-4 w-4 ml-1 hover:bg-transparent hover:text-blue-600"
                           onClick={() => removeTag(field.value, tag)}
                         >
                           <X className="h-3 w-3" />

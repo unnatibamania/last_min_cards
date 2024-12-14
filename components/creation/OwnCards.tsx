@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
+import { motion } from "framer-motion";
+
 import CardView from "@/components/creation/CardView";
 import { GripVertical } from "lucide-react";
 
@@ -50,12 +52,20 @@ export default function EnhancedCardCreator() {
           {cards.map((card, index) => (
             <div
               key={index}
+              onClick={() => setCurrentIndex(index)}
               className={
                 index === currentIndex
-                  ? "bg-white border border-gray-500 flex items-center gap-2 rounded-xl p-2 shadow-sm"
-                  : "bg-white flex items-center gap-2 rounded-xl p-2 shadow-sm"
+                  ? "bg-white z-10 relative border cursor-pointer  flex items-center gap-2 rounded-xl p-2 shadow-sm"
+                  : "bg-white z-10 relative cursor-pointer hover:shadow-md transition-all duration-300 flex items-center gap-2 rounded-xl p-2 shadow-sm"
               }
             >
+              {index === currentIndex && (
+                <motion.div
+                  layout="position"
+                  layoutId="current-card"
+                  className="absolute inset-0 -z-10 rounded-xl border border-gray-500 bg-white"
+                />
+              )}
               <GripVertical className="h-4 w-4 cursor-grab" />
               <p className="text-sm font-medium">{card.question}</p>
             </div>
