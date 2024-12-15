@@ -1,10 +1,14 @@
 import { Progress } from "../ui/progress";
 
+import { useRouter } from "next/navigation";
+
 import { Button } from "../ui/button";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const RecentCard = ({ index }: { index: number }) => {
+  const router = useRouter();
+
   return (
     <div
       key={index}
@@ -48,7 +52,14 @@ export const RecentCard = ({ index }: { index: number }) => {
           </Avatar>
         </div>
 
-        <Button variant="outline">Continue</Button>
+        <Button
+          variant="outline"
+          onClick={() => {
+            router.push("/cards/123");
+          }}
+        >
+          Continue
+        </Button>
       </div>
     </div>
   );
