@@ -1,4 +1,7 @@
+"use client";
+
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 import {
   HomeIcon,
   Settings,
@@ -10,18 +13,28 @@ import {
 } from "lucide-react";
 
 export const Aside = () => {
+  const router = useRouter();
+
   return (
     <aside className="flex flex-col border min-w-56 justify-between">
       <div className="flex flex-col items-center gap-4 p-2">
         <h1 className="text-2xl font-bold p-2">Sheep Ed App</h1>
 
         <section className="flex flex-col gap-1 w-full">
-          <Button variant="ghost" className="w-full  justify-start">
+          <Button
+            variant="ghost"
+            onClick={() => router.push("/")}
+            className="w-full justify-start"
+          >
             <HomeIcon className="w-4 h-4" />
             <span>Dashboard</span>
           </Button>
 
-          <Button variant="ghost" className="w-full justify-between">
+          <Button
+            variant="ghost"
+            onClick={() => router.push("/drafts")}
+            className="w-full justify-between"
+          >
             <div className="flex items-center gap-1">
               <LucideDraftingCompass className="w-4 h-4" />
               <span>Drafts</span>
@@ -56,7 +69,11 @@ export const Aside = () => {
       </div>
 
       <div className="flex flex-col p-4 gap-4">
-        <Button variant="ghost" className="w-full justify-start">
+        <Button
+          onClick={() => router.push("/settings")}
+          variant="ghost"
+          className="w-full justify-start"
+        >
           <Settings className="w-4 h-4" />
           <span>Settings</span>
         </Button>

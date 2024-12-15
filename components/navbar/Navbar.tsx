@@ -21,7 +21,7 @@ export const Navbar = () => {
   const router = useRouter();
 
   return (
-    <nav className="flex items-center p-2 border justify-between">
+    <nav className="flex items-center p-2 shadow-sm border-b border-gray-200 justify-between">
       <Input
         placeholder="Search"
         startContent={<Search className="w-4 h-4" />}
