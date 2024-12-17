@@ -165,12 +165,10 @@ export default function CardView({
     }
   };
 
-  console.log({ cards, form: form.getValues() });
-
   return (
     <Form {...form}>
       <form>
-        <Card className="w-[480px] h-fit">
+        <Card className=" h-fit">
           <CardHeader>
             <CardDescription>
               Card {currentIndex + 1} of {cards.length}

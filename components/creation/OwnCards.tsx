@@ -5,14 +5,22 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
+import { useRouter } from "next/navigation";
+
 import { motion } from "framer-motion";
 
 import CardView from "@/components/creation/CardView";
 import { GripVertical } from "lucide-react";
 
+import { createSet } from "@/actions/set";
+import { createCard } from "@/actions/cards";
 import { CardData } from "@/app/types/card";
 
+import { Loader2 } from "lucide-react";
+
 export default function EnhancedCardCreator() {
+  const router = useRouter();
+
   const [cards, setCards] = useState<CardData[]>([
     {
       id: "1",
@@ -27,13 +35,32 @@ export default function EnhancedCardCreator() {
 
   const [cardSetTitle, setCardSetTitle] = useState("");
   const [cardSetDescription, setCardSetDescription] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+
+  const [isLoading, setIsLoading] = useState(false);
   // const [name, setName] = useState(cards[0].name);
   // const [description, setDescription] = useState(cards[0].description);
   // const [newTag, setNewTag] = useState("");
 
+  const handleCreateSet = async () => {
+    setIsLoading(true);
+    const newSet = await createSet({
+      title: cardSetTitle,
+      description: cardSetDescription,
+    });
+
+    await createCard({
+      cardsList: cards,
+      setId: newSet[0]?.id,
+    });
+
+    router.push(`/`);
+    setIsLoading(false);
+  };
+
   return (
-    <div className="grid grid-cols-3 w-full gap-8 h-full">
-      <div className="flex flex-col  gap-4">
+    <div className="grid grid-cols-3 w-full gap-3 h-full">
+      <div className="flex flex-col gap-4">
         <section className="flex flex-col gap-4">
           <Input
             placeholder="Title"
@@ -45,6 +72,14 @@ export default function EnhancedCardCreator() {
             value={cardSetDescription}
             onChange={(e) => setCardSetDescription(e.target.value)}
           />
+
+          <Input
+            placeholder="Tags"
+            value={tags.join(",")}
+            onChange={(e) => setTags(e.target.value.split(","))}
+          />
+
+          {/* <Button onClick={handleCreateSet}>Create Set</Button> */}
         </section>
 
         <div className="flex flex-col gap-1">
@@ -99,7 +134,13 @@ export default function EnhancedCardCreator() {
 
           <div className="flex gap-2">
             <Button variant="outline">Save as draft</Button>
-            <Button>Create</Button>
+            <Button onClick={handleCreateSet} disabled={isLoading}>
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                "Create"
+              )}
+            </Button>
           </div>
         </div>
       </div>

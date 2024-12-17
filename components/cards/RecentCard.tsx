@@ -1,3 +1,5 @@
+"use client";
+
 import { Progress } from "../ui/progress";
 
 import { useRouter } from "next/navigation";

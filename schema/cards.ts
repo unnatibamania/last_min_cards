@@ -1,13 +1,15 @@
-import { pgTable, text, uuid, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, uuid, timestamp } from "drizzle-orm/pg-core";
 
-import { users } from "./user";
+import { sets } from "./set";
 
-export const cards = pgTable("cards", {
+export const cards = pgTable("card", {
   id: uuid("id").primaryKey().defaultRandom(),
   question: text("question").notNull(),
   answer: text("answer").notNull(),
   tags: text("tags").array(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
-  userId: uuid("user_id").references(() => users.id),
+  userId: text("userId").notNull(),
+  setId: uuid("setId").references(() => sets.id),
+  order: integer("order").notNull(),
 });

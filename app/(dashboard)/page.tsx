@@ -1,8 +1,6 @@
-"use client";
-
 import { RecentCard } from "@/components/cards/RecentCard";
 
-export default function Home() {
+export default async function Home() {
   return (
     // <div className="flex justify-center w-full h-full">
     <div className="flex h-full max-w-6xl gap-6 flex-col p-6">

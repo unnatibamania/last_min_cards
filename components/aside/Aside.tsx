@@ -7,8 +7,8 @@ import {
   Settings,
   LucideDraftingCompass,
   Notebook,
-  Stars,
-  Send,
+  // Stars,
+  // Send,
   Zap,
 } from "lucide-react";
 
@@ -43,7 +43,11 @@ export const Aside = () => {
             <p>5</p>
           </Button>
 
-          <Button variant="ghost" className="w-full  justify-between">
+          <Button
+            onClick={() => router.push("/my-sets")}
+            variant="ghost"
+            className="w-full  justify-between"
+          >
             <div className="flex items-center gap-1">
               <Notebook className="w-4 h-4" />
               <span>My sets</span>
@@ -52,19 +56,19 @@ export const Aside = () => {
             <p>5</p>
           </Button>
 
-          <Button variant="ghost" className="w-full  justify-between">
+          {/* <Button variant="ghost" className="w-full  justify-between">
             <div className="flex items-center gap-1">
               <Send className="w-4 h-4" />
               <span>Shared</span>
             </div>
 
             <p>5</p>
-          </Button>
+          </Button> */}
 
-          <Button variant="ghost" className="w-full  justify-start">
+          {/* <Button variant="ghost" className="w-full  justify-start">
             <Stars className="w-4 h-4" />
             AI Generated
-          </Button>
+          </Button> */}
         </section>
       </div>
 
