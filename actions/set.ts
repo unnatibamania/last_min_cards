@@ -12,32 +12,39 @@ export const createSet = async ({
   title,
   description,
   isDraft,
+  isPublic,
 }: {
   title: string;
   description: string;
   isDraft: boolean;
+  isPublic: boolean;
 }) => {
-  const user = await currentUser();
+  try {
+    const user = await currentUser();
 
-  if (!user) {
-    throw new Error("User not found");
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const newSet = await db
+      .insert(sets)
+      .values({
+        title: title.length > 0 ? title : "Untitled",
+        description,
+        userId: user.id,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        is_draft: isDraft,
+        is_public: isPublic,
+        id: randomUUID(),
+      })
+      .returning();
+
+    return newSet;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to create set");
   }
-
-  const newSet = await db
-    .insert(sets)
-    .values({
-      title: title.length > 0 ? title : "Untitled",
-      description,
-      userId: user.id,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      is_draft: isDraft,
-      is_public: false,
-      id: randomUUID(),
-    })
-    .returning();
-
-  return newSet;
 };
 
 export const getSets = async () => {

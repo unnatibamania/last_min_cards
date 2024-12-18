@@ -18,32 +18,37 @@ export const createCard = async ({
 }) => {
   // insert multiple
 
-  const user = await currentUser();
+  try {
+    const user = await currentUser();
 
-  if (!user?.id) throw new Error("User not authenticated");
+    if (!user?.id) throw new Error("User not authenticated");
 
-  const cardListToReturn = await db
-    .insert(cards)
-    .values(
-      cardsList.map((card, index) => ({
-        answer: card.answer,
-        question: card.question,
-        tags: card.tags,
-        setId,
-        order: index,
-        userId: user.id,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        id: randomUUID(),
-      }))
-    )
-    .returning();
+    const cardListToReturn = await db
+      .insert(cards)
+      .values(
+        cardsList.map((card, index) => ({
+          answer: card.answer,
+          question: card.question,
+          tags: card.tags,
+          setId,
+          order: index,
+          userId: user.id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          id: randomUUID(),
+        }))
+      )
+      .returning();
 
-  console.log({
-    cardListToReturn,
-  });
+    console.log({
+      cardListToReturn,
+    });
 
-  return cardListToReturn;
+    return cardListToReturn;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to create cards");
+  }
 };
 
 export const getCards = async ({ setId }: { setId: string }) => {
