@@ -3,6 +3,8 @@
 import { db } from "@/db";
 import { cards } from "@/schema/cards";
 
+import { eq } from "drizzle-orm";
+
 import { randomUUID } from "crypto";
 
 import { currentUser } from "@clerk/nextjs/server";
@@ -42,4 +44,19 @@ export const createCard = async ({
   });
 
   return cardListToReturn;
+};
+
+export const getCards = async ({ setId }: { setId: string }) => {
+  const cardsList = await db.select().from(cards).where(eq(cards.setId, setId));
+
+  return cardsList;
+};
+
+export const getCardsByDraftId = async ({ draftId }: { draftId: string }) => {
+  const cardsList = await db
+    .select()
+    .from(cards)
+    .where(eq(cards.setId, draftId));
+
+  return cardsList;
 };

@@ -69,3 +69,9 @@ export const getDraftSets = async () => {
 
   return draftSets;
 };
+
+export const getDraft = async (id: string) => {
+  const draft = await db.select().from(sets).where(eq(sets.id, id));
+
+  return draft;
+};

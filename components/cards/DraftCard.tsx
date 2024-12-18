@@ -54,7 +54,7 @@ export const DraftCard = ({ draft }: { draft: Set }) => {
           <Button
             variant="outline"
             onClick={() => {
-              router.push(`/sets/${draft.id}`);
+              router.push(`/draft/${draft.id}`);
             }}
           >
             <Pencil className="w-4 h-4" />

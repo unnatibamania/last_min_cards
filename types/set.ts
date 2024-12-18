@@ -6,6 +6,8 @@ export type Set = {
   description: string;
   is_draft: boolean;
   is_public: boolean;
+  created_at: string;
+  updated_at: string;
 };
 
 export const createSetSchema = z.object({
@@ -14,4 +16,6 @@ export const createSetSchema = z.object({
   description: z.string(),
   is_draft: z.boolean(),
   is_public: z.boolean(),
+  created_at: z.string(),
+  updated_at: z.string(),
 });
