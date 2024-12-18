@@ -1,5 +1,6 @@
 import { getDraftSets } from "@/actions/set";
 import { DraftCard } from "@/components/cards/DraftCard";
+import { Set } from "@/types/set";
 
 export default async function DraftsPage() {
   const draftSets = await getDraftSets();
@@ -11,8 +12,8 @@ export default async function DraftsPage() {
       </div>
 
       <div className="grid grid-cols-3 gap-2">
-        {draftSets.map((draft, index) => (
-          <DraftCard key={draft.id} index={index} />
+        {draftSets.map((draft) => (
+          <DraftCard key={draft.id} draft={draft as Set} />
         ))}
       </div>
     </div>

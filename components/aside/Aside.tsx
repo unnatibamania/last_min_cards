@@ -1,7 +1,10 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
   HomeIcon,
   Settings,
@@ -14,6 +17,7 @@ import {
 
 export const Aside = () => {
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <aside className="flex flex-col border min-w-56 justify-between">
@@ -24,7 +28,10 @@ export const Aside = () => {
           <Button
             variant="ghost"
             onClick={() => router.push("/")}
-            className="w-full justify-start"
+            className={cn(
+              "w-full justify-start",
+              pathname === "/" && "bg-muted"
+            )}
           >
             <HomeIcon className="w-4 h-4" />
             <span>Dashboard</span>
@@ -33,7 +40,10 @@ export const Aside = () => {
           <Button
             variant="ghost"
             onClick={() => router.push("/drafts")}
-            className="w-full justify-between"
+            className={cn(
+              "w-full justify-between",
+              pathname === "/drafts" && "bg-muted"
+            )}
           >
             <div className="flex items-center gap-1">
               <LucideDraftingCompass className="w-4 h-4" />
@@ -46,7 +56,10 @@ export const Aside = () => {
           <Button
             onClick={() => router.push("/my-sets")}
             variant="ghost"
-            className="w-full  justify-between"
+            className={cn(
+              "w-full  justify-between",
+              pathname === "/my-sets" && "bg-muted"
+            )}
           >
             <div className="flex items-center gap-1">
               <Notebook className="w-4 h-4" />
@@ -55,20 +68,6 @@ export const Aside = () => {
 
             <p>5</p>
           </Button>
-
-          {/* <Button variant="ghost" className="w-full  justify-between">
-            <div className="flex items-center gap-1">
-              <Send className="w-4 h-4" />
-              <span>Shared</span>
-            </div>
-
-            <p>5</p>
-          </Button> */}
-
-          {/* <Button variant="ghost" className="w-full  justify-start">
-            <Stars className="w-4 h-4" />
-            AI Generated
-          </Button> */}
         </section>
       </div>
 

@@ -42,11 +42,12 @@ export default function EnhancedCardCreator() {
   // const [description, setDescription] = useState(cards[0].description);
   // const [newTag, setNewTag] = useState("");
 
-  const handleCreateSet = async () => {
+  const handleCreateSet = async ({ isDraft }: { isDraft: boolean }) => {
     setIsLoading(true);
     const newSet = await createSet({
       title: cardSetTitle,
       description: cardSetDescription,
+      isDraft: isDraft,
     });
 
     await createCard({
@@ -133,8 +134,16 @@ export default function EnhancedCardCreator() {
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline">Save as draft</Button>
-            <Button onClick={handleCreateSet} disabled={isLoading}>
+            <Button
+              variant="outline"
+              onClick={() => handleCreateSet({ isDraft: true })}
+            >
+              Save as draft
+            </Button>
+            <Button
+              onClick={() => handleCreateSet({ isDraft: false })}
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (

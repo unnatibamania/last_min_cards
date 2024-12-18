@@ -11,9 +11,11 @@ import { currentUser } from "@clerk/nextjs/server";
 export const createSet = async ({
   title,
   description,
+  isDraft,
 }: {
   title: string;
   description: string;
+  isDraft: boolean;
 }) => {
   const user = await currentUser();
 
@@ -29,7 +31,7 @@ export const createSet = async ({
       userId: user.id,
       createdAt: new Date(),
       updatedAt: new Date(),
-      is_draft: true,
+      is_draft: isDraft,
       is_public: false,
       id: randomUUID(),
     })
