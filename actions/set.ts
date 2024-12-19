@@ -112,3 +112,23 @@ export const updateSet = async (
     throw new Error("Failed to update set");
   }
 };
+
+export const getMySets = async () => {
+  const user = await currentUser();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  try {
+    const mySets = await db
+      .select()
+      .from(sets)
+      .where(and(eq(sets.is_draft, false), eq(sets.userId, user?.id)));
+
+    return mySets;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to get my sets");
+  }
+};
