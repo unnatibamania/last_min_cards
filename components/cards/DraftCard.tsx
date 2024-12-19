@@ -27,7 +27,7 @@ export const DraftCard = ({ draft }: { draft: Set }) => {
 
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <Pill key={tag} tag={tag} onClick={() => {}} />
+            <Pill key={tag} tag={tag} hasAction={false} onClick={() => {}} />
           ))}
         </div>
 

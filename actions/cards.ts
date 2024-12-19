@@ -7,6 +7,8 @@ import { eq } from "drizzle-orm";
 
 import { randomUUID } from "crypto";
 
+import { Card } from "@/types/cards";
+
 import { currentUser } from "@clerk/nextjs/server";
 
 export const createCard = async ({
@@ -40,10 +42,6 @@ export const createCard = async ({
       )
       .returning();
 
-    console.log({
-      cardListToReturn,
-    });
-
     return cardListToReturn;
   } catch (error) {
     console.error(error);
@@ -64,4 +62,26 @@ export const getCardsByDraftId = async ({ draftId }: { draftId: string }) => {
     .where(eq(cards.setId, draftId));
 
   return cardsList;
+};
+
+export const updateCards = async (cardsToUpdate: Card[]) => {
+  try {
+    // Use Promise.all to handle multiple updates in parallel
+    const updatedCards = await Promise.all(
+      cardsToUpdate.map(async (card) => {
+        return db.update(cards).set(card).where(eq(cards.id, card.id));
+      })
+    );
+
+    return updatedCards;
+  } catch (error) {
+    console.error("Error updating cards:", error);
+    throw new Error("Failed to update cards");
+  }
+};
+
+export const deleteCard = async (id: string) => {
+  const deletedCard = await db.delete(cards).where(eq(cards.id, id));
+
+  return deletedCard;
 };

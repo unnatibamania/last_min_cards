@@ -46,6 +46,7 @@ export default function EnhancedCardCreator() {
       answer:
         "An object at rest stays at rest and an object in motion stays in motion with the same speed and in the same direction unless acted upon by an unbalanced force.",
       tags: ["inertia", "physics"],
+      order: 1,
     },
   ]);
 
@@ -68,6 +69,7 @@ export default function EnhancedCardCreator() {
         description: cardSetDescription,
         isDraft: isDraft,
         isPublic,
+        tags,
       });
 
       await createCard({

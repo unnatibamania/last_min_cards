@@ -9,6 +9,7 @@ export type Card = {
   updatedAt: Date;
   userId: string;
   setId: string;
+  order: number;
 };
 
 export const createCardSchema = z.object({
@@ -20,4 +21,5 @@ export const createCardSchema = z.object({
   updatedAt: z.date(),
   userId: z.string(),
   setId: z.string(),
+  order: z.number(),
 });

@@ -1,5 +1,7 @@
 import { useRef, useEffect } from "react";
+
 import { CardData } from "@/app/types/card";
+// import { CardData } from "@/app/types/card";
 import { z } from "zod";
 import { formCardSchema } from "@/app/types/card";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -135,6 +137,7 @@ export default function CardView({
       answer: "",
       tags: [],
       image: "",
+      order: cards?.length + 1,
     };
 
     setCards([...cards, newCard]);

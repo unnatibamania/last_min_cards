@@ -13,11 +13,13 @@ export const createSet = async ({
   description,
   isDraft,
   isPublic,
+  tags,
 }: {
   title: string;
   description: string;
   isDraft: boolean;
   isPublic: boolean;
+  tags: string[];
 }) => {
   try {
     const user = await currentUser();
@@ -37,6 +39,7 @@ export const createSet = async ({
         is_draft: isDraft,
         is_public: isPublic,
         id: randomUUID(),
+        tags,
       })
       .returning();
 
@@ -81,4 +84,31 @@ export const getDraft = async (id: string) => {
   const draft = await db.select().from(sets).where(eq(sets.id, id));
 
   return draft;
+};
+
+export const updateSet = async (
+  id: string,
+  title: string,
+  description: string,
+  isPublic: boolean,
+  tags: string[]
+) => {
+  const user = await currentUser();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  try {
+    const set = await db
+      .update(sets)
+      .set({ title, description, is_public: isPublic, tags })
+      .where(eq(sets.id, id))
+      .returning();
+
+    return set;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to update set");
+  }
 };

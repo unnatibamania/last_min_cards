@@ -8,6 +8,7 @@ export type Set = {
   is_public: boolean;
   created_at: string;
   updated_at: string;
+  tags: string[];
 };
 
 export const createSetSchema = z.object({
@@ -18,4 +19,5 @@ export const createSetSchema = z.object({
   is_public: z.boolean(),
   created_at: z.string(),
   updated_at: z.string(),
+  tags: z.array(z.string()),
 });

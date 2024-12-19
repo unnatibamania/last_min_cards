@@ -9,4 +9,5 @@ export const sets = pgTable("set", {
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
   userId: text("userId").notNull(),
+  tags: text("tags").array(),
 });
