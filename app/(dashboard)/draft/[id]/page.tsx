@@ -10,5 +10,6 @@ export default async function DraftPage({
   const draft = await getDraft(params.id);
   const cards = await getCardsByDraftId({ draftId: params.id });
 
-  return <DraftPageClient draft={draft} cards={cards} />;
+  return <DraftPageClient draft={draft[0]} cards={cards} />;
 }
+

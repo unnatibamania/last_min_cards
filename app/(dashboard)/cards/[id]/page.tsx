@@ -9,6 +9,8 @@ import { ListRestart, Shuffle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
+// import { getCards } from "@/actions/cards";
+
 export default function CardSetPage() {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -87,3 +89,4 @@ export default function CardSetPage() {
     </div>
   );
 }
+

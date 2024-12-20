@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "../ui/button";
 
+import { Set } from "@/types/set";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export const RecentCard = ({ index }: { index: number }) => {
+export const RecentCard = ({ index, set }: { index: number; set: Set }) => {
   const router = useRouter();
 
   return (
@@ -17,8 +18,8 @@ export const RecentCard = ({ index }: { index: number }) => {
       className="flex cursor-pointer border rounded-2xl p-4 flex-col gap-4"
     >
       <div className="flex flex-col">
-        <h2 className="text-lg font-bold">Flash Card {index + 1}</h2>
-        <p className="text-xs text-gray-500">This is a flash card.</p>
+        <h2 className="text-lg font-bold">{set.title}</h2>
+        <p className="text-xs text-gray-500">{set.description}</p>
       </div>
 
       <div className="flex flex-col gap-1">
@@ -57,7 +58,7 @@ export const RecentCard = ({ index }: { index: number }) => {
         <Button
           variant="outline"
           onClick={() => {
-            router.push("/cards/123");
+            router.push(`/cards/${set.id}`);
           }}
         >
           Continue
@@ -66,3 +67,4 @@ export const RecentCard = ({ index }: { index: number }) => {
     </div>
   );
 };
+

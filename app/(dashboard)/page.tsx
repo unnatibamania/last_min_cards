@@ -1,5 +1,17 @@
 import { RecentCard } from "@/components/cards/RecentCard";
 
+const set = {
+  title: "Newtons laws of motion",
+  description: "Newtons laws of motion is here",
+  // createdAt: new Date(),
+  is_draft: false,
+  is_public: true,
+  id: "1",
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
+  tags: [],
+};
+
 export default async function Home() {
   return (
     // <div className="flex justify-center w-full h-full">
@@ -14,7 +26,11 @@ export default async function Home() {
 
         <div className="grid grid-cols-3 gap-2">
           {Array.from({ length: 3 }).map((_, index) => (
-            <RecentCard index={index} key={index} />
+            <RecentCard
+              set={{ ...set, id: index.toString() }}
+              index={index}
+              key={index}
+            />
           ))}
         </div>
       </div>
@@ -29,7 +45,11 @@ export default async function Home() {
 
         <div className="grid grid-cols-3 gap-2">
           {Array.from({ length: 3 }).map((_, index) => (
-            <RecentCard index={index} key={index} />
+            <RecentCard
+              set={{ ...set, id: index.toString() }}
+              index={index}
+              key={index}
+            />
           ))}
         </div>
       </div>
@@ -37,3 +57,4 @@ export default async function Home() {
     // </div>
   );
 }
+

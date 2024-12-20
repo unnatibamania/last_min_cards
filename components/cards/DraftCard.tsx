@@ -1,18 +1,33 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { Pencil, Trash, CreditCard, Lock, Unlock } from "lucide-react";
+
+import { deleteDraft } from "@/actions/set";
+
+import { Loader2 } from "lucide-react";
 
 import { Button } from "../ui/button";
 
 import { Set } from "@/types/set";
 import { Pill } from "../Pill";
 
-const tags = ["tag1", "tag2", "tag3"];
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 export const DraftCard = ({ draft }: { draft: Set }) => {
   const router = useRouter();
+
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -26,7 +41,7 @@ export const DraftCard = ({ draft }: { draft: Set }) => {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
+          {draft.tags.map((tag) => (
             <Pill key={tag} tag={tag} hasAction={false} onClick={() => {}} />
           ))}
         </div>
@@ -60,12 +75,46 @@ export const DraftCard = ({ draft }: { draft: Set }) => {
             <Pencil className="w-4 h-4" />
             Edit
           </Button>
-          <Button onClick={() => {}}>
+          <Button
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
             <Trash className="w-4 h-4" />
             Delete
           </Button>
         </div>
+
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you sure?</DialogTitle>
+            </DialogHeader>
+
+            <DialogDescription>
+              This action will delete the draft set.
+            </DialogDescription>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={async () => {
+                  setIsLoading(true);
+                  await deleteDraft(draft.id);
+                  router.refresh();
+                  setOpen(false);
+                  setIsLoading(false);
+                }}
+              >
+                {isLoading ? <Loader2 className="w-4 h-4" /> : "Delete"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </>
   );
 };
+

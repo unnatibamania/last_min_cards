@@ -35,11 +35,8 @@ interface DraftPageClientProps {
 }
 
 export const DraftPageClient = ({ draft, cards }: DraftPageClientProps) => {
-  const [cardSetTitle, setCardSetTitle] = useState(draft.title);
-  const [cardSetDescription, setCardSetDescription] = useState(
-    draft.description
-  );
-  // const [tags, setTags] = useState(draft.tags);
+  const [cardSetTitle, setCardSetTitle] = useState("");
+  const [cardSetDescription, setCardSetDescription] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [cardsList, setCardsList] = useState<CardData[]>(cards);
@@ -53,6 +50,16 @@ export const DraftPageClient = ({ draft, cards }: DraftPageClientProps) => {
   useEffect(() => {
     setCardsList(cards);
   }, [cards]);
+
+  useEffect(() => {
+    if (draft) {
+      console.log("draft", draft);
+      setCardSetTitle(draft.title);
+      setCardSetDescription(draft.description);
+      setTags(draft.tags);
+      setIsPublic(draft.is_public);
+    }
+  }, [draft]);
 
   return (
     <div className="grid grid-cols-3 bg-gray-50 p-6  w-full gap-3 h-full">
@@ -75,12 +82,10 @@ export const DraftPageClient = ({ draft, cards }: DraftPageClientProps) => {
             placeholder="Tags"
             value={setTagInput}
             onChange={(e) => setSetTagInput(e.target.value)}
-            // value={tags.join(",")}
-            // onChange={(e) => setTags(e.target.value.split(","))}
           />
 
           <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
+            {tags?.map((tag) => (
               <Pill
                 key={tag}
                 tag={tag}
@@ -208,3 +213,4 @@ export const DraftPageClient = ({ draft, cards }: DraftPageClientProps) => {
     </div>
   );
 };
+

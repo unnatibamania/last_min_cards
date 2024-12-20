@@ -2,12 +2,14 @@
 
 import { db } from "@/db";
 import { sets } from "@/schema/set";
+import { cards } from "@/schema/cards";
 import { and, eq } from "drizzle-orm";
 
 import { randomUUID } from "crypto";
 
 import { currentUser } from "@clerk/nextjs/server";
 
+// POST: create a set
 export const createSet = async ({
   title,
   description,
@@ -50,6 +52,7 @@ export const createSet = async ({
   }
 };
 
+// GET: get all sets
 export const getSets = async () => {
   const user = await currentUser();
 
@@ -65,6 +68,7 @@ export const getSets = async () => {
   return setsList;
 };
 
+// GET: get all draft sets
 export const getDraftSets = async () => {
   const user = await currentUser();
 
@@ -80,12 +84,14 @@ export const getDraftSets = async () => {
   return draftSets;
 };
 
+// GET: get a draft set
 export const getDraft = async (id: string) => {
   const draft = await db.select().from(sets).where(eq(sets.id, id));
 
   return draft;
 };
 
+// PUT: update a set
 export const updateSet = async (
   id: string,
   title: string,
@@ -113,6 +119,7 @@ export const updateSet = async (
   }
 };
 
+// GET: get all my sets
 export const getMySets = async () => {
   const user = await currentUser();
 
@@ -132,3 +139,28 @@ export const getMySets = async () => {
     throw new Error("Failed to get my sets");
   }
 };
+
+// DELETE: delete a draft set
+export const deleteDraft = async (id: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  try {
+    const draftCards = await db
+      .delete(cards)
+      .where(eq(cards.setId, id))
+      .returning();
+
+    // Then delete the set
+    const draft = await db.delete(sets).where(eq(sets.id, id)).returning();
+
+    return { draft, draftCards };
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to delete draft");
+  }
+};
+
