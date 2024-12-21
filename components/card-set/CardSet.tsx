@@ -12,11 +12,14 @@ import { Card } from "@/types/cards";
 import { Set } from "@/types/set";
 
 import { useHotkeys } from "@mantine/hooks";
+import { Pill } from "../Pill";
 
 // import { CardData } from "@/app/types/card";
 
 export default function CardSet({ cards, set }: { cards: Card[]; set: Set }) {
   const [isFlipped, setIsFlipped] = useState(false);
+
+  const [isShuffledOn, setIsShuffledOn] = useState(false);
 
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
@@ -33,8 +36,6 @@ export default function CardSet({ cards, set }: { cards: Card[]; set: Set }) {
   const goToPreviousCard = () => {
     setCurrentCardIndex(Math.max(0, currentCardIndex - 1));
   };
-
-  console.log(set);
 
   return (
     <div className="flex h-full w-full justify-center">
@@ -66,9 +67,17 @@ export default function CardSet({ cards, set }: { cards: Card[]; set: Set }) {
             backface-hidden flex flex-col justify-center items-center
             ${!isFlipped ? "z-10" : "z-0"}`}
               >
-                <h2 className="text-2xl font-bold mb-4">
-                  {cards[currentCardIndex].question}
-                </h2>
+                <div className=" gap-y-2">
+                  <h2 className="text-2xl font-bold mb-4">
+                    {cards[currentCardIndex].question}
+                  </h2>
+
+                  <div className="flex flex-wrap gap-2">
+                    {cards[currentCardIndex].tags.map((tag) => (
+                      <Pill key={tag} tag={tag} onClick={() => {}} />
+                    ))}
+                  </div>
+                </div>
                 {/* <p className="text-center">Click to flip the card!</p>
             <div className="mt-4 text-blue-500">🃏 Front Content</div> */}
               </div>
@@ -131,7 +140,14 @@ export default function CardSet({ cards, set }: { cards: Card[]; set: Set }) {
               <ListRestart />
             </Button>
 
-            <Button className="rounded-full" size={"icon"} variant={"outline"}>
+            <Button
+              onClick={() => {
+                setIsShuffledOn(!isShuffledOn);
+              }}
+              className="rounded-full"
+              size={"icon"}
+              variant={"outline"}
+            >
               <Shuffle />
             </Button>
           </div>
