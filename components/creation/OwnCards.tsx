@@ -11,8 +11,6 @@ import { Pill } from "../Pill";
 
 import { useRouter } from "next/navigation";
 
-import { motion } from "framer-motion";
-
 import { Switch } from "@/components/ui/switch";
 
 import {
@@ -32,7 +30,7 @@ import {
 } from "@/components/ui/form";
 
 import CardView from "@/components/creation/CardView";
-import { GripVertical, DraftingCompass, Save } from "lucide-react";
+import { DraftingCompass, Save } from "lucide-react";
 
 import { createSet } from "@/actions/set";
 import { createCard } from "@/actions/cards";
@@ -43,6 +41,8 @@ import { Loader2 } from "lucide-react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { OrderingCards } from "./OrderingCards";
 
 const setFormSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -191,30 +191,12 @@ export default function EnhancedCardCreator() {
             {/* <Button onClick={handleCreateSet}>Create Set</Button> */}
           </form>
 
-          <div className="flex flex-col gap-1">
-            <p className="text-sm font-medium">Cards</p>
-            {cards.map((card, index) => (
-              <div
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={
-                  index === currentIndex
-                    ? "bg-white z-10 relative border cursor-pointer  flex items-center gap-2 rounded-xl p-2 shadow-sm"
-                    : "bg-white z-10 relative cursor-pointer hover:shadow-md transition-all duration-300 flex items-center gap-2 rounded-xl p-2 shadow-sm"
-                }
-              >
-                {index === currentIndex && (
-                  <motion.div
-                    layout="position"
-                    layoutId="current-card"
-                    className="absolute inset-0 -z-10 rounded-xl border border-gray-500 bg-white"
-                  />
-                )}
-                <GripVertical className="h-4 w-4 cursor-grab" />
-                <p className="text-sm font-medium">{card.question}</p>
-              </div>
-            ))}
-          </div>
+          <OrderingCards
+            cards={cards}
+            setCards={setCards}
+            setCurrentIndex={setCurrentIndex}
+            currentIndex={currentIndex}
+          />
         </div>
 
         <CardView

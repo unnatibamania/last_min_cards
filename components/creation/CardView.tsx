@@ -132,7 +132,7 @@ export default function CardView({
 
   const handleAddCard = () => {
     const newCard: CardData = {
-      id: `card-${Date.now()}`, // Generate unique ID
+      id: `${cards.length + 1}`, // Generate unique ID
       question: "",
       answer: "",
       tags: [],
@@ -358,3 +358,4 @@ export default function CardView({
     </Form>
   );
 }
+
