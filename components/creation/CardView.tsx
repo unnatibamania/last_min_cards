@@ -1,5 +1,7 @@
 import { useRef, useEffect } from "react";
+
 import { CardData } from "@/app/types/card";
+// import { CardData } from "@/app/types/card";
 import { z } from "zod";
 import { formCardSchema } from "@/app/types/card";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -135,6 +137,7 @@ export default function CardView({
       answer: "",
       tags: [],
       image: "",
+      order: cards?.length + 1,
     };
 
     setCards([...cards, newCard]);
@@ -165,12 +168,10 @@ export default function CardView({
     }
   };
 
-  console.log({ cards, form: form.getValues() });
-
   return (
     <Form {...form}>
       <form>
-        <Card className="w-[480px] h-fit">
+        <Card className=" h-fit">
           <CardHeader>
             <CardDescription>
               Card {currentIndex + 1} of {cards.length}
@@ -220,14 +221,15 @@ export default function CardView({
                       <Badge
                         key={tag}
                         variant="secondary"
-                        className="text-sm rounded-full text-blue-600 bg-blue-300/40"
+                        className="text-sm rounded-full text-blue-600 bg-blue-300/40 hover:bg-blue-300/60"
                       >
                         {tag}
                         <Button
                           type="button"
-                          variant="ghost"
+                          variant={"ghost"}
+                          // variant="ghost"
                           size="icon"
-                          className="h-4 w-4 ml-1"
+                          className="h-4 w-4 ml-1 hover:bg-transparent hover:text-blue-600"
                           onClick={() => removeTag(field.value, tag)}
                         >
                           <X className="h-3 w-3" />

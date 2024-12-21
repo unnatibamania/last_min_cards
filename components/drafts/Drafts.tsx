@@ -1,20 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { Set } from "@/types/set";
+
+import { useState, useEffect } from "react";
+
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-
-import { useToast } from "@/hooks/use-toast";
-
-import { Pill } from "../Pill";
-
-import { useRouter } from "next/navigation";
-
+import { GripVertical } from "lucide-react";
 import { motion } from "framer-motion";
 
-import { Switch } from "@/components/ui/switch";
+import { Pill } from "@/components/Pill";
 
+import CardView from "@/components/creation/CardView";
+
+import { CardData } from "@/app/types/card";
+
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { Save } from "lucide-react";
+
+import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
@@ -24,75 +29,44 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import CardView from "@/components/creation/CardView";
-import { GripVertical, DraftingCompass, Save } from "lucide-react";
+interface DraftPageClientProps {
+  draft: Set;
+  cards: CardData[];
+}
 
-import { createSet } from "@/actions/set";
-import { createCard } from "@/actions/cards";
-import { CardData } from "@/app/types/card";
-
-import { Loader2 } from "lucide-react";
-
-export default function EnhancedCardCreator() {
-  const router = useRouter();
-
-  const { toast } = useToast();
-
-  const [confirmCreate, setConfirmCreate] = useState(false);
-  const [cards, setCards] = useState<CardData[]>([
-    {
-      id: "1",
-      question: "First Law of motion",
-      answer:
-        "An object at rest stays at rest and an object in motion stays in motion with the same speed and in the same direction unless acted upon by an unbalanced force.",
-      tags: ["inertia", "physics"],
-      order: 1,
-    },
-  ]);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+export const DraftPageClient = ({ draft, cards }: DraftPageClientProps) => {
   const [cardSetTitle, setCardSetTitle] = useState("");
   const [cardSetDescription, setCardSetDescription] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [cardsList, setCardsList] = useState<CardData[]>(cards);
   const [setTagInput, setSetTagInput] = useState("");
   // const [cardSetTags, setCardSetTags] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic] = useState(draft.is_public);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDraftLoading, setIsDraftLoading] = useState(false);
+  const [confirmCreate, setConfirmCreate] = useState(false);
 
-  const handleCreateSet = async ({ isDraft }: { isDraft: boolean }) => {
-    try {
-      // setIsLoading(true);
-      const newSet = await createSet({
-        title: cardSetTitle,
-        description: cardSetDescription,
-        isDraft: isDraft,
-        isPublic,
-        tags,
-      });
+  useEffect(() => {
+    setCardsList(cards);
+  }, [cards]);
 
-      await createCard({
-        cardsList: cards,
-        setId: newSet[0]?.id,
-      });
-
-      router.push(`/my-sets`);
-      setIsLoading(false);
-      setIsDraftLoading(false);
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: "Error",
-        description: "Failed to create set",
-      });
+  useEffect(() => {
+    if (draft) {
+      console.log("draft", draft);
+      setCardSetTitle(draft.title);
+      setCardSetDescription(draft.description);
+      setTags(draft.tags);
+      setIsPublic(draft.is_public);
     }
-  };
+  }, [draft]);
 
   return (
-    <div className="grid grid-cols-3 w-full  gap-3 h-full">
+    <div className="grid grid-cols-3 bg-gray-50 p-6  w-full gap-3 h-full">
+      {/* Your client-side UI here */}
       <div className="flex flex-col gap-4">
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-3">
+          <p className="text-sm font-medium">Set Details</p>
           <Input
             placeholder="Title"
             value={cardSetTitle}
@@ -107,19 +81,11 @@ export default function EnhancedCardCreator() {
           <Input
             placeholder="Tags"
             value={setTagInput}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                const input = e.currentTarget;
-                const newTag = input.value.trim();
-                setTags([...tags, newTag]);
-                setSetTagInput("");
-              }
-            }}
             onChange={(e) => setSetTagInput(e.target.value)}
           />
+
           <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
+            {tags?.map((tag) => (
               <Pill
                 key={tag}
                 tag={tag}
@@ -160,8 +126,8 @@ export default function EnhancedCardCreator() {
       </div>
 
       <CardView
-        cards={cards}
-        setCards={setCards}
+        cards={cardsList}
+        setCards={setCardsList}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
       />
@@ -195,20 +161,6 @@ export default function EnhancedCardCreator() {
           </div>
 
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => {
-                setIsDraftLoading(true);
-                handleCreateSet({ isDraft: true });
-              }}
-            >
-              {isDraftLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <DraftingCompass className="h-4 w-4" />
-              )}
-              Save as draft
-            </Button>
             <Button
               onClick={() => setConfirmCreate(true)}
               // onClick={() => handleCreateSet({ isDraft: false })}
@@ -247,7 +199,7 @@ export default function EnhancedCardCreator() {
             <Button
               onClick={() => {
                 setIsLoading(true);
-                handleCreateSet({ isDraft: false });
+                // handleCreateSet({ isDraft: false });
                 // setConfirmCreate(false);
               }}
             >
@@ -256,6 +208,9 @@ export default function EnhancedCardCreator() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* <div className="flex flex-col gap-4"></div> */}
     </div>
   );
-}
+};
+
