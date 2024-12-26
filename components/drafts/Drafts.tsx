@@ -89,6 +89,7 @@ export const DraftPageClient = ({ draft, cards }: DraftPageClientProps) => {
               <Pill
                 key={tag}
                 tag={tag}
+                hasAction={false}
                 onClick={() => {
                   setTags(tags.filter((t) => t !== tag));
                 }}

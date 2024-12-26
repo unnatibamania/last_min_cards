@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { Set } from "@/types/set";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export const RecentCard = ({ index, set }: { index: number; set: Set }) => {
+export const RecentCard = ({ index, set, cardsLength }: { index: number; set: Set, cardsLength: number   }) => {
   const router = useRouter();
 
   return (
@@ -26,7 +26,7 @@ export const RecentCard = ({ index, set }: { index: number; set: Set }) => {
         <div className="flex justify-between">
           <p>Progress</p>
 
-          <p className="text-xs">12 / 15 cards</p>
+          <p className="text-xs">12 / {cardsLength} cards</p>
         </div>
 
         <Progress value={33} />

@@ -1,4 +1,6 @@
 import { getMySets } from "@/actions/set";
+import { getCardsByDraftId } from "@/actions/cards";
+import { Set } from "@/types/set";
 import { RecentCard } from "@/components/cards/RecentCard";
 
 export default async function MySets() {
@@ -24,10 +26,15 @@ export default async function MySets() {
       </div>
       <div className="grid grid-cols-3 gap-2">
         {mySets.map((set, index) => (
-          <RecentCard key={set.id} index={index} set={set} />
+          <Card key={set.id} index={index} set={set} />
         ))}
       </div>
     </div>
   );
 }
 
+const Card = async  ({ set }: { set: Set }) => {
+  const cards = await getCardsByDraftId({ draftId: set.id });
+
+  return <RecentCard key={set.id} index={0} set={set} cardsLength={cards.length} />;
+};
