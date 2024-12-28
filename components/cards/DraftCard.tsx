@@ -7,7 +7,6 @@ import { Pencil, Trash, CreditCard, Lock, Unlock } from "lucide-react";
 
 import { deleteDraft } from "@/actions/set";
 
-import { Loader2 } from "lucide-react";
 
 import { Button } from "../ui/button";
 
@@ -15,15 +14,6 @@ import { Set } from "@/types/set";
 import { Pill } from "../Pill";
 
 import { DeleteConfirmation } from "../confirmation-modal/DeleteConfirmation";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
 
 export const DraftCard = ({ draft }: { draft: Set }) => {
   const router = useRouter();
