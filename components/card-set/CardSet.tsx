@@ -6,6 +6,10 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { ListRestart, Shuffle } from "lucide-react";
 
+import {  markCardAsVisited } from "@/actions/cards";
+
+
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/types/cards";
@@ -14,9 +18,8 @@ import { Set } from "@/types/set";
 import { useHotkeys } from "@mantine/hooks";
 import { Pill } from "../Pill";
 
-// import { CardData } from "@/app/types/card";
 
-export default function CardSet({ cards, set }: { cards: Card[]; set: Set }) {
+export default function CardSet({ cards, set }: { cards: Card[]; set: Set, }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const [isShuffledOn, setIsShuffledOn] = useState(false);
@@ -36,6 +39,13 @@ export default function CardSet({ cards, set }: { cards: Card[]; set: Set }) {
   const goToPreviousCard = () => {
     setCurrentCardIndex(Math.max(0, currentCardIndex - 1));
   };
+
+
+  console.log({
+    currentCardIndex,
+  })
+
+  
 
   return (
     <div className="flex h-full w-full justify-center">
@@ -117,12 +127,14 @@ export default function CardSet({ cards, set }: { cards: Card[]; set: Set }) {
 
             <Button
               disabled={currentCardIndex === cards.length - 1}
-              onClick={() => {
+              onClick={async () => {
+                await markCardAsVisited(cards[currentCardIndex].id);
                 goToNextCard();
               }}
               className="rounded-full"
               size={"icon"}
               variant={"outline"}
+           
             >
               <ArrowRight />
             </Button>

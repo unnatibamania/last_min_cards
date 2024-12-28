@@ -30,6 +30,7 @@ export default async function Home() {
               set={{ ...set, id: index.toString() }}
               index={index}
               key={index}
+              cardsLength={10}
             />
           ))}
         </div>
@@ -49,6 +50,7 @@ export default async function Home() {
               set={{ ...set, id: index.toString() }}
               index={index}
               key={index}
+              cardsLength={10}
             />
           ))}
         </div>

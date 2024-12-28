@@ -36,5 +36,7 @@ export default async function MySets() {
 const Card = async  ({ set }: { set: Set }) => {
   const cards = await getCardsByDraftId({ draftId: set.id });
 
-  return <RecentCard key={set.id} index={0} set={set} cardsLength={cards.length} />;
+  const visitedCards = cards.filter((card) => card.is_visited);
+
+  return <RecentCard key={set.id} index={0} set={set} cardsLength={cards.length} visitedCardsLength={visitedCards.length} />;
 };

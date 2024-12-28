@@ -9,7 +9,7 @@ import CardSet from "@/components/card-set/CardSet";
 import { Card } from "@/types/cards";
 import { Set } from "@/types/set";
 
-export default async function CardSetPage({
+export default async function CardSetPage({ 
   params,
 }: {
   params: { id: string };

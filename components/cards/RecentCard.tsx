@@ -1,16 +1,26 @@
 "use client";
 
+import { useState } from "react";
+
 import { Progress } from "../ui/progress";
 
 import { useRouter } from "next/navigation";
 
+import { deleteDraft } from "@/actions/set";
+
 import { Button } from "../ui/button";
+
+import { Trash2 } from 'lucide-react'
+
+import { DeleteConfirmation } from "../confirmation-modal/DeleteConfirmation";
 
 import { Set } from "@/types/set";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export const RecentCard = ({ index, set, cardsLength }: { index: number; set: Set, cardsLength: number   }) => {
+export const RecentCard = ({ index, set, cardsLength, visitedCardsLength }: { index: number; set: Set, cardsLength: number, visitedCardsLength: number }) => {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div
@@ -26,10 +36,10 @@ export const RecentCard = ({ index, set, cardsLength }: { index: number; set: Se
         <div className="flex justify-between">
           <p>Progress</p>
 
-          <p className="text-xs">12 / {cardsLength} cards</p>
+          <p className="text-xs">{visitedCardsLength} / {cardsLength} cards</p>
         </div>
 
-        <Progress value={33} />
+        <Progress value={visitedCardsLength / cardsLength * 100} />
       </div>
 
       <div className="flex items-center justify-between">
@@ -55,6 +65,16 @@ export const RecentCard = ({ index, set, cardsLength }: { index: number; set: Se
           </Avatar>
         </div>
 
+        <div className="flex gap-x-2">
+        <Button
+        size={'icon'}
+          onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <Trash2 />
+          </Button>
+
         <Button
           variant="outline"
           onClick={() => {
@@ -63,7 +83,10 @@ export const RecentCard = ({ index, set, cardsLength }: { index: number; set: Se
         >
           Continue
         </Button>
+        </div>
       </div>
+
+      <DeleteConfirmation open={open} setOpen={setOpen} isLoading={isLoading} deleteDraft={deleteDraft} draft={set} setIsLoading={setIsLoading} />
     </div>
   );
 };

@@ -56,7 +56,14 @@ export const Sidebar = ({
               <span>Drafts</span>
             </div>
 
-            <p>{draftSets}</p>
+            {
+              draftSets > 0 ? (
+                <p>{draftSets}</p>
+              ) : (
+                null
+              )
+            }
+
           </Button>
 
           <Button
@@ -71,8 +78,13 @@ export const Sidebar = ({
               <Notebook className="w-4 h-4" />
               <span>My sets</span>
             </div>
-
-            <p>{sets}</p>
+            {
+              sets > 0 ? (
+                <p>{sets}</p>
+              ) : (
+                null
+              )
+            }
           </Button>
         </section>
       </div>

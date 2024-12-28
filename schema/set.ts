@@ -1,4 +1,4 @@
-import { pgTable, text, uuid, timestamp, boolean } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, uuid, timestamp, boolean } from "drizzle-orm/pg-core";
 
 export const sets = pgTable("set", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -10,4 +10,6 @@ export const sets = pgTable("set", {
   updatedAt: timestamp("updated_at").defaultNow(),
   userId: text("userId").notNull(),
   tags: text("tags").array(),
+  // progress: integer("progress"),
+  is_bookmarked: boolean("is_bookmarked"),
 });

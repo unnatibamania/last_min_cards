@@ -14,6 +14,8 @@ import { Button } from "../ui/button";
 import { Set } from "@/types/set";
 import { Pill } from "../Pill";
 
+import { DeleteConfirmation } from "../confirmation-modal/DeleteConfirmation";
+
 import {
   Dialog,
   DialogContent,
@@ -85,7 +87,7 @@ export const DraftCard = ({ draft }: { draft: Set }) => {
           </Button>
         </div>
 
-        <Dialog open={open} onOpenChange={setOpen}>
+        {/* <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Are you sure?</DialogTitle>
@@ -112,7 +114,9 @@ export const DraftCard = ({ draft }: { draft: Set }) => {
               </Button>
             </DialogFooter>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
+
+        <DeleteConfirmation open={open} setOpen={setOpen} isLoading={isLoading} deleteDraft={deleteDraft} draft={draft} setIsLoading={setIsLoading} />
       </div>
     </>
   );
