@@ -9,6 +9,7 @@ export type Set = {
   created_at: string;
   updated_at: string;
   tags: string[];
+  users_enrolled: string[];
 };
 
 export const createSetSchema = z.object({
@@ -20,4 +21,5 @@ export const createSetSchema = z.object({
   created_at: z.string(),
   updated_at: z.string(),
   tags: z.array(z.string()),
+  users_enrolled: z.array(z.object({ id: z.string(), profile_picture: z.string() })),
 });

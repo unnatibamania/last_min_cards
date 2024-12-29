@@ -8,6 +8,7 @@ export type SetData = {
   created_at: Date;
   updated_at: Date;
   is_draft: boolean;
+  users_enrolled: string[];
 };
 
 export const formSetSchema: ZodType<SetData> = z.object({
@@ -18,4 +19,5 @@ export const formSetSchema: ZodType<SetData> = z.object({
   created_at: z.date(),
   updated_at: z.date(),
   is_draft: z.boolean(),
+  users_enrolled: z.array(z.string()),
 });

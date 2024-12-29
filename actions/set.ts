@@ -164,3 +164,16 @@ export const deleteDraft = async (id: string) => {
   }
 };
 
+
+export const getPopularSets = async () => {
+  const popularSets = await db.select().from(sets).where(eq(sets.is_public, true));
+
+  return popularSets;
+};
+
+
+export const getRecentSets = async () => {
+  const recentSets = await db.select().from(sets).where(eq(sets.is_draft, false));
+
+  return recentSets;
+};

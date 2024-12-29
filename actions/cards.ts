@@ -88,8 +88,8 @@ export const deleteCard = async (id: string) => {
 
 
 export const markCardAsVisited = async (id: string) => {
-  console.log("marking card as visited", id);
   const updatedCard = await db.update(cards).set({ is_visited: true }).where(eq(cards.id, id)).returning();
 
   return updatedCard;
 };
+

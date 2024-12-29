@@ -44,9 +44,7 @@ export const RecentCard = ({ index, set, cardsLength, visitedCardsLength }: { in
 
       <div className="flex items-center justify-between">
         {
-          // set.
-        }
-        <div className="flex items-center -space-x-3 relative">
+          set.users_enrolled?.length > 0 ?    <div className="flex items-center -space-x-3 relative">
           <Avatar>
             <AvatarImage src="https://github.com/itsnitinr.png" />
             <AvatarFallback>CN</AvatarFallback>
@@ -67,7 +65,9 @@ export const RecentCard = ({ index, set, cardsLength, visitedCardsLength }: { in
             <AvatarFallback>+4</AvatarFallback>
           </Avatar>
         </div>
-
+ : <div></div>
+        }
+     
         <div className="flex gap-x-2">
         <Button
         size={'icon'}

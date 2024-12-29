@@ -1,4 +1,4 @@
-import { integer, pgTable, text, uuid, timestamp, boolean } from "drizzle-orm/pg-core";
+import {  pgTable, text, uuid, timestamp, boolean } from "drizzle-orm/pg-core";
 
 export const sets = pgTable("set", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -12,4 +12,9 @@ export const sets = pgTable("set", {
   tags: text("tags").array(),
   // progress: integer("progress"),
   is_bookmarked: boolean("is_bookmarked"),
+  users_enrolled: text("users_enrolled")
+  .array()
+  .notNull()
+  .$type<Array<{ id: string; profile_picture: string }>>()
+  .default([])
 });
