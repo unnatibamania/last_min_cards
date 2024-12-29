@@ -1,5 +1,6 @@
 import { getDraftSets } from "@/actions/set";
 import { DraftCard } from "@/components/cards/DraftCard";
+import { DraftCardForServer } from "@/components/cards/DraftCardForServer";
 // import { Set } from "@/types/set";
 
 export default async function DraftsPage() {
@@ -27,7 +28,7 @@ export default async function DraftsPage() {
 
       <div className="grid grid-cols-3 gap-2">
         {draftSets.map((draft) => (
-          <DraftCard key={draft.id} draft={draft} />
+          <DraftCardForServer key={draft.id} draft={draft} />
         ))}
       </div>
     </div>

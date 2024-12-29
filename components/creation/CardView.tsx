@@ -38,6 +38,7 @@ import {
 
 type FormValues = z.infer<typeof formCardSchema>;
 
+
 export default function CardView({
   cards,
   setCards,
@@ -60,6 +61,7 @@ export default function CardView({
       image: cards[currentIndex]?.image,
     },
   });
+
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 

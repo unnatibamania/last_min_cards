@@ -43,6 +43,9 @@ export const RecentCard = ({ index, set, cardsLength, visitedCardsLength }: { in
       </div>
 
       <div className="flex items-center justify-between">
+        {
+          // set.
+        }
         <div className="flex items-center -space-x-3 relative">
           <Avatar>
             <AvatarImage src="https://github.com/itsnitinr.png" />

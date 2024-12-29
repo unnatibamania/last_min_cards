@@ -15,7 +15,7 @@ import { Pill } from "../Pill";
 
 import { DeleteConfirmation } from "../confirmation-modal/DeleteConfirmation";
 
-export const DraftCard = ({ draft }: { draft: Set }) => {
+export const DraftCard = ({ draft, cardsLength }: { draft: Set, cardsLength: number }) => {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -41,7 +41,7 @@ export const DraftCard = ({ draft }: { draft: Set }) => {
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
             <CreditCard className="w-4 h-4" />
-            <p className="text-xs text-gray-500">43 cards at present</p>
+            <p className="text-xs text-gray-500">{cardsLength} cards at present</p>
           </div>
 
           <p className="text-xs flex items-center gap-1 text-gray-500">

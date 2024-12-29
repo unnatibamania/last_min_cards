@@ -53,7 +53,6 @@ export const DraftPageClient = ({ draft, cards }: DraftPageClientProps) => {
 
   useEffect(() => {
     if (draft) {
-      console.log("draft", draft);
       setCardSetTitle(draft.title);
       setCardSetDescription(draft.description);
       setTags(draft.tags);
@@ -100,9 +99,11 @@ export const DraftPageClient = ({ draft, cards }: DraftPageClientProps) => {
           {/* <Button onClick={handleCreateSet}>Create Set</Button> */}
         </section>
 
+       
+
         <div className="flex flex-col gap-1">
           <p className="text-sm font-medium">Cards</p>
-          {cards.map((card, index) => (
+          {cardsList.map((card, index) => (
             <div
               key={index}
               onClick={() => setCurrentIndex(index)}
